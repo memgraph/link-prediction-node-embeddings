@@ -2,7 +2,7 @@ from string import Template
 from typing import List, Tuple, Dict
 
 FILENAME = "CA-HepPh.txt"
-#FILENAME = "karate.txt"
+OUTPUT_FILE = "queries.cypherl"
 
 NODE_NAME = "Collaborator"
 EDGE_NAME = "COLLABORATED_WITH"
@@ -19,7 +19,7 @@ def parse_edges_dataset(filename=FILENAME) -> List[Tuple[int, int]]:
         if line.startswith("#"):
             continue
         line = line.strip()
-        line_parts = line.split("\t") ## change to tab
+        line_parts = line.split("\t")
         edge = (int(line_parts[0]), int(line_parts[1]))
         if (edge[1], edge[0]) in edges:
             continue
@@ -42,9 +42,8 @@ def create_queries(edges: List[Tuple[int, int]]):
 def main():
     edges = parse_edges_dataset()
     queries = create_queries(edges)
-    print("\n".join(queries))
 
-    file = open('query.cypherl', 'w')
+    file = open(OUTPUT_FILE, 'w')
     file.write("\n".join(queries))
     file.close()
 
